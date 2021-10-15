@@ -1,0 +1,4 @@
+Dimension,g mean,g SD,g HDI 5%,g HDI 95%,precision
+Blocking,0.003,0.431,-0.696,0.718,1.414
+Hiding,-0.021,0.412,-0.685,0.66,1.3450000000000002
+Inspecting,0.003,0.431,-0.696,0.718,1.414
