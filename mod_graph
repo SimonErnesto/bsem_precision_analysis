@@ -1,0 +1,62 @@
+digraph {
+	subgraph cluster44 {
+		nu [label="nu
+~
+Normal"]
+		lam [label="lam
+~
+Normal"]
+		label=44 labeljust=r labelloc=b style=rounded
+	}
+	subgraph cluster4 {
+		alpha [label="alpha
+~
+Normal"]
+		cuts [label="cuts
+~
+Normal"]
+		label=4 labeljust=r labelloc=b style=rounded
+	}
+	subgraph "cluster120 x 4" {
+		zeta [label="zeta
+~
+Normal"]
+		label="120 x 4" labeljust=r labelloc=b style=rounded
+	}
+	subgraph "cluster44 x 4" {
+		Lambda [label="Lambda
+~
+Deterministic" shape=box]
+		label="44 x 4" labeljust=r labelloc=b style=rounded
+	}
+	subgraph cluster3 {
+		gam [label="gam
+~
+Normal"]
+		label=3 labeljust=r labelloc=b style=rounded
+	}
+	subgraph "cluster4 x 4" {
+		Gamma [label="Gamma
+~
+Deterministic" shape=box]
+		label="4 x 4" labeljust=r labelloc=b style=rounded
+	}
+	subgraph "cluster120 x 44" {
+		M [label="M
+~
+Deterministic" shape=box]
+		Y [label="Y
+~
+OrderedLogistic" style=filled]
+		label="120 x 44" labeljust=r labelloc=b style=rounded
+	}
+	lam -> Lambda
+	gam -> Gamma
+	lam -> M
+	zeta -> M
+	gam -> M
+	alpha -> M
+	nu -> M
+	M -> Y
+	cuts -> Y
+}
