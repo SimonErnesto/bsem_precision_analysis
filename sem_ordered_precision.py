@@ -71,28 +71,28 @@ paths = np.array([[0,0,0,1],[0,0,0,1],[0,0,0,1],[0,0,0,0]])
 
 with pm.Model() as mod:
    
-    # priors on item intercepts
+    #items intercepts priors
     # nu_m = pm.Normal('num', 0, 0.1)
     # nu_s = pm.HalfNormal('nus', 0.1)
     nu = pm.Normal("nu", mu=0, sigma=0.5, shape=p, testval=items.mean(axis=0))
 
-    # priors on factor intercepts
+    #factors intercepts priors
     # alpha_m = pm.Normal('alpham', 0, 0.1)
     # alpha_s = pm.HalfNormal('alphas', 0.1)
     alpha = pm.Normal("alpha", mu=0, sigma=0.5, shape=m, testval=np.zeros(m))
       
-    # priors on factor residuals
+    #factors residuals priors
     # zeta_m = pm.Normal('zetam', 0, 0.1)
     # zeta_s = pm.HalfNormal('zetas', 0.1)
     zeta = pm.Normal("zeta", mu=0, sigma=0.5, shape=(n,m), testval=0)
 
-    # priors on factor loadings
+    #factor loadings priors
     #l = np.asarray(factors).sum().astype(int)
     # lam_m = pm.Normal('lamm', 0, 0.1)
     # lam_s = pm.HalfNormal('lams', 0.1)
     lam = pm.Normal("lam", mu=0, sigma=0.5, shape=p, testval=np.ones(p))
 
-    # loading matrix
+    #loading matrix
     Lambda = tt.zeros(factors.shape)
     k = 0
     for i, j in prod(range(p), range(m)):
@@ -101,13 +101,13 @@ with pm.Model() as mod:
             k += 1
     pm.Deterministic("Lambda", var=Lambda)
 
-    # priors on paths
+    #paths priors
     #g = np.asarray(paths).sum()
     # gam_m = pm.Normal('gamm', 0, 0.1)
     # gam_s = pm.HalfNormal('gams', 0.1)
     gam = pm.Normal("gam", mu=0, sigma=0.5, shape=m-1, testval=np.ones(m-1))
 
-    # path matrix
+    #paths matrix
     Gamma = tt.zeros(paths.shape)
     k = 0
     for i, j in prod(range(m), range(m)):
@@ -116,17 +116,17 @@ with pm.Model() as mod:
             k += 1
     pm.Deterministic("Gamma", var=Gamma)
 
-    # latent variables
+    #latent variables (dimensions)
     I = np.eye(m)
     M = pm.Deterministic('M', nu +  pm.math.matrix_dot(pm.math.matrix_dot((alpha+zeta),
              pm.math.matrix_inverse(I-Gamma.T)), Lambda.T))
 
-    # item cutpoints, shape = number of levels in Likert scale
+    #item cutpoints, shape = number of levels in Likert scale
     a = pm.Normal('cuts', mu=[-2,-1,1,2], sigma=0.5, transform=pm.distributions.transforms.ordered,
         shape=4, testval=np.arange(4))
    
 
-    # observations/likelihood
+    #observations/likelihood
     y = pm.OrderedLogistic('Y', cutpoints=a, eta=M, observed=items, shape=items.shape)
 
 ######### Prio Predictive Checks ################    
