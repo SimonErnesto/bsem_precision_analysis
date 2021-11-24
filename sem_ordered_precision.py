@@ -258,10 +258,10 @@ mhid = trace["Gamma"].T[3][1].mean().round(3) #hiding mean
 sdhid = trace["Gamma"].T[3][1].std().round(3)
 h5hid = az.hdi(trace['Gamma'].T[3][1], hdi_prob=0.9)[0].round(3)
 h95hid = az.hdi(trace['Gamma'].T[3][1], hdi_prob=0.9)[1].round(3)
-mins = trace["Gamma"].T[3][0].mean().round(3) #inspecting mean
-sdins = trace["Gamma"].T[3][0].std().round(3)
-h5ins = az.hdi(trace['Gamma'].T[3][0], hdi_prob=0.9)[0].round(3)
-h95ins = az.hdi(trace['Gamma'].T[3][0], hdi_prob=0.9)[1].round(3)
+mins = trace["Gamma"].T[3][2].mean().round(3) #inspecting mean
+sdins = trace["Gamma"].T[3][2].std().round(3)
+h5ins = az.hdi(trace['Gamma'].T[3][2], hdi_prob=0.9)[0].round(3)
+h95ins = az.hdi(trace['Gamma'].T[3][2], hdi_prob=0.9)[1].round(3)
 
 dims = ['Blocking', 'Hiding', 'Inspecting']
 gmean = [mblock, mhid, mins]
